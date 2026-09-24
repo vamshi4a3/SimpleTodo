@@ -1,0 +1,30 @@
+name: Code Quality Check
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  lint-and-format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-x: '20'
+          cache: 'npm' # Auto-caches node_modules for faster subsequent runs
+
+      - name: Install Dependencies
+        run: npm ci # Ensures a clean install matching package-lock.json
+
+      - name: Check Prettier Formatting
+        run: npx prettier --check .
+
+      - name: Run ESLint
+        run: npm run lint
