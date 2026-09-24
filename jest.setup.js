@@ -12,5 +12,5 @@ jest.mock('@react-native-async-storage/async-storage', () => {
       store = {};
     }),
   };
-  return {__esModule: true, default: mock, ...mock};
+  return { __esModule: true, default: mock, ...mock };
 });

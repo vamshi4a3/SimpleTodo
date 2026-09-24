@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useReducer, useState} from 'react';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -10,12 +10,12 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import TodoItem from '../components/TodoItem';
-import {loadTodos, saveTodos} from '../storage';
-import {makeId, todoReducer} from '../todoReducer';
-import {colors} from '../theme';
-import {Todo} from '../types';
+import { loadTodos, saveTodos } from '../storage';
+import { makeId, todoReducer } from '../todoReducer';
+import { colors } from '../theme';
+import { Todo } from '../types';
 
 export default function TodoScreen() {
   const [todos, dispatch] = useReducer(todoReducer, []);
@@ -25,7 +25,7 @@ export default function TodoScreen() {
 
   useEffect(() => {
     loadTodos().then(saved => {
-      dispatch({type: 'LOAD', todos: saved});
+      dispatch({ type: 'LOAD', todos: saved });
       setLoaded(true);
     });
   }, []);
@@ -41,10 +41,10 @@ export default function TodoScreen() {
       return;
     }
     if (editingId) {
-      dispatch({type: 'EDIT', id: editingId, title: text});
+      dispatch({ type: 'EDIT', id: editingId, title: text });
       setEditingId(null);
     } else {
-      dispatch({type: 'ADD', id: makeId(), title: text, now: Date.now()});
+      dispatch({ type: 'ADD', id: makeId(), title: text, now: Date.now() });
     }
     setText('');
   }, [text, editingId]);
@@ -61,12 +61,12 @@ export default function TodoScreen() {
 
   const confirmDelete = (todo: Todo) => {
     Alert.alert('Delete task', `Delete "${todo.title}"?`, [
-      {text: 'Cancel', style: 'cancel'},
+      { text: 'Cancel', style: 'cancel' },
       {
         text: 'Delete',
         style: 'destructive',
         onPress: () => {
-          dispatch({type: 'DELETE', id: todo.id});
+          dispatch({ type: 'DELETE', id: todo.id });
           if (editingId === todo.id) {
             cancelEdit();
           }
@@ -82,7 +82,8 @@ export default function TodoScreen() {
     <SafeAreaView style={styles.safe}>
       <KeyboardAvoidingView
         style={styles.flex}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
         <View style={styles.header}>
           <Text style={styles.heading}>My Tasks</Text>
           <Text style={styles.sub} testID="remaining-count">
@@ -116,10 +117,10 @@ export default function TodoScreen() {
           data={todos}
           keyExtractor={t => t.id}
           contentContainerStyle={styles.list}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <TodoItem
               todo={item}
-              onToggle={id => dispatch({type: 'TOGGLE', id})}
+              onToggle={id => dispatch({ type: 'TOGGLE', id })}
               onEdit={startEdit}
               onDelete={confirmDelete}
             />
@@ -135,7 +136,8 @@ export default function TodoScreen() {
           <Pressable
             testID="clear-completed"
             style={styles.clear}
-            onPress={() => dispatch({type: 'CLEAR_COMPLETED'})}>
+            onPress={() => dispatch({ type: 'CLEAR_COMPLETED' })}
+          >
             <Text style={styles.clearText}>Clear completed</Text>
           </Pressable>
         )}
@@ -145,12 +147,12 @@ export default function TodoScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: {flex: 1, backgroundColor: colors.background},
-  flex: {flex: 1},
-  header: {padding: 20, paddingBottom: 8},
-  heading: {fontSize: 30, fontWeight: '800', color: colors.primaryDark},
-  sub: {fontSize: 14, color: colors.muted, marginTop: 2},
-  inputRow: {flexDirection: 'row', paddingHorizontal: 20, marginTop: 8},
+  safe: { flex: 1, backgroundColor: colors.background },
+  flex: { flex: 1 },
+  header: { padding: 20, paddingBottom: 8 },
+  heading: { fontSize: 30, fontWeight: '800', color: colors.primaryDark },
+  sub: { fontSize: 14, color: colors.muted, marginTop: 2 },
+  inputRow: { flexDirection: 'row', paddingHorizontal: 20, marginTop: 8 },
   input: {
     flex: 1,
     backgroundColor: colors.card,
@@ -167,15 +169,15 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     justifyContent: 'center',
   },
-  btnText: {color: '#fff', fontWeight: '700', fontSize: 16},
+  btnText: { color: '#fff', fontWeight: '700', fontSize: 16 },
   cancel: {
     color: colors.danger,
     textAlign: 'center',
     marginTop: 8,
     fontWeight: '600',
   },
-  list: {padding: 20},
-  empty: {textAlign: 'center', color: colors.muted, marginTop: 40},
-  clear: {alignItems: 'center', padding: 14},
-  clearText: {color: colors.danger, fontWeight: '700'},
+  list: { padding: 20 },
+  empty: { textAlign: 'center', color: colors.muted, marginTop: 40 },
+  clear: { alignItems: 'center', padding: 14 },
+  clearText: { color: colors.danger, fontWeight: '700' },
 });

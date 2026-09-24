@@ -1,16 +1,16 @@
-import React, {useEffect, useRef} from 'react';
-import {Animated, StyleSheet, Text, View} from 'react-native';
-import {colors} from '../theme';
+import React, { useEffect, useRef } from 'react';
+import { Animated, StyleSheet, Text, View } from 'react-native';
+import { colors } from '../theme';
 
-type Props = {onFinish: () => void; duration?: number};
+type Props = { onFinish: () => void; duration?: number };
 
-export default function SplashScreen({onFinish, duration = 2000}: Props) {
+export default function SplashScreen({ onFinish, duration = 2000 }: Props) {
   const scale = useRef(new Animated.Value(0.6)).current;
   const opacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     Animated.parallel([
-      Animated.spring(scale, {toValue: 1, useNativeDriver: true}),
+      Animated.spring(scale, { toValue: 1, useNativeDriver: true }),
       Animated.timing(opacity, {
         toValue: 1,
         duration: 700,
@@ -23,11 +23,13 @@ export default function SplashScreen({onFinish, duration = 2000}: Props) {
 
   return (
     <View style={styles.container} testID="splash-screen">
-      <Animated.View style={[styles.logo, {opacity, transform: [{scale}]}]}>
+      <Animated.View style={[styles.logo, { opacity, transform: [{ scale }] }]}>
         <Text style={styles.check}>✓</Text>
       </Animated.View>
-      <Animated.Text style={[styles.title, {opacity}]}>Simple Todo</Animated.Text>
-      <Animated.Text style={[styles.tagline, {opacity}]}>
+      <Animated.Text style={[styles.title, { opacity }]}>
+        Simple Todo
+      </Animated.Text>
+      <Animated.Text style={[styles.tagline, { opacity }]}>
         Get things done
       </Animated.Text>
     </View>
@@ -50,7 +52,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 24,
   },
-  check: {fontSize: 64, color: colors.primary, fontWeight: '900'},
-  title: {fontSize: 32, fontWeight: '800', color: '#FFFFFF'},
-  tagline: {fontSize: 16, color: '#E0E7FF', marginTop: 6},
+  check: { fontSize: 64, color: colors.primary, fontWeight: '900' },
+  title: { fontSize: 32, fontWeight: '800', color: '#FFFFFF' },
+  tagline: { fontSize: 16, color: '#E0E7FF', marginTop: 6 },
 });

@@ -1,12 +1,12 @@
-import {Todo} from './types';
+import { Todo } from './types';
 
 export type Action =
-  | {type: 'LOAD'; todos: Todo[]}
-  | {type: 'ADD'; id: string; title: string; now: number}
-  | {type: 'EDIT'; id: string; title: string}
-  | {type: 'TOGGLE'; id: string}
-  | {type: 'DELETE'; id: string}
-  | {type: 'CLEAR_COMPLETED'};
+  | { type: 'LOAD'; todos: Todo[] }
+  | { type: 'ADD'; id: string; title: string; now: number }
+  | { type: 'EDIT'; id: string; title: string }
+  | { type: 'TOGGLE'; id: string }
+  | { type: 'DELETE'; id: string }
+  | { type: 'CLEAR_COMPLETED' };
 
 export function todoReducer(state: Todo[], action: Action): Todo[] {
   switch (action.type) {
@@ -18,7 +18,7 @@ export function todoReducer(state: Todo[], action: Action): Todo[] {
         return state;
       }
       return [
-        {id: action.id, title, completed: false, createdAt: action.now},
+        { id: action.id, title, completed: false, createdAt: action.now },
         ...state,
       ];
     }
@@ -27,11 +27,11 @@ export function todoReducer(state: Todo[], action: Action): Todo[] {
       if (!title) {
         return state;
       }
-      return state.map(t => (t.id === action.id ? {...t, title} : t));
+      return state.map(t => (t.id === action.id ? { ...t, title } : t));
     }
     case 'TOGGLE':
       return state.map(t =>
-        t.id === action.id ? {...t, completed: !t.completed} : t,
+        t.id === action.id ? { ...t, completed: !t.completed } : t,
       );
     case 'DELETE':
       return state.filter(t => t.id !== action.id);
