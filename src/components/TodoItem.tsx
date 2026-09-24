@@ -36,7 +36,7 @@ export default function TodoItem({todo, onToggle, onEdit, onDelete}: Props) {
         accessibilityLabel={`Delete ${todo.title}`}
         onPress={() => onDelete(todo)}
         style={styles.action}>
-        <Text style={styles.delete}>Delete</Text>
+        <Text style={[styles.delete,{color:'red'}]}>Delete</Text>
       </Pressable>
     </View>
   );
